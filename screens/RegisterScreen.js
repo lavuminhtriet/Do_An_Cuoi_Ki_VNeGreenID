@@ -12,8 +12,7 @@ export default function RegisterScreen({ navigation }) {
       Alert.alert('Lỗi', 'Mật khẩu xác nhận không khớp.');
       return;
     }
-    // **GIẢ LẬP API:**
-    // Gọi API đăng ký
+
     console.log('Đăng ký với:', email, password);
     Alert.alert('Thành công', 'Đăng ký thành công. Vui lòng đăng nhập.', [
       { text: 'OK', onPress: () => navigation.navigate('Login') }
@@ -53,7 +52,6 @@ export default function RegisterScreen({ navigation }) {
   );
 }
 
-// Tái sử dụng styles từ LoginScreen (bạn nên tách ra file styles.js)
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', padding: 20 },
   title: { fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 20 },
