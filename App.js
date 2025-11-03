@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthProvider, useAuth } from './contexts/AuthContext'; // Import AuthProvider
 
-// Import các màn hình
+
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
@@ -13,7 +13,7 @@ import LoadingScreen from './screens/LoadingScreen'; // Màn hình chờ
 
 const Stack = createStackNavigator();
 
-// Stack cho luồng Xác thực (Chưa đăng nhập)
+
 const AuthStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Login" component={LoginScreen} />
@@ -22,7 +22,7 @@ const AuthStack = () => (
   </Stack.Navigator>
 );
 
-// Stack cho luồng Chính (Đã đăng nhập hoặc là Khách)
+
 const MainStack = () => (
   <Stack.Navigator>
     <Stack.Screen 
@@ -33,19 +33,17 @@ const MainStack = () => (
   </Stack.Navigator>
 );
 
-// Component điều hướng chính
+
 const AppNavigator = () => {
   const { authState } = useAuth();
   
-  // Bạn có thể thêm logic kiểm tra token từ AsyncStorage ở đây
-  // và hiển thị LoadingScreen trong khi chờ.
   
   // Hiển thị màn hình chính nếu đã đăng nhập HOẶC là khách (FR-1.1.2)
   if (authState.isLoggedIn || authState.isGuest) {
     return <MainStack />;
   }
 
-  // Hiển thị màn hình xác thực nếu chưa
+  
   return <AuthStack />;
 };
 
