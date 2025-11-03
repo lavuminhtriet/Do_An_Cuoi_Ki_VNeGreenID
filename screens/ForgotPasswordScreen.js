@@ -7,8 +7,7 @@ export default function ForgotPasswordScreen({ navigation }) {
 
   // FR-1.1.3: Xử lý đặt lại mật khẩu
   const handleResetPassword = () => {
-    // **GIẢ LẬP API:**
-    // Gọi API /forgot-password
+    
     console.log('Gửi yêu cầu reset cho:', email);
     Alert.alert(
       'Kiểm tra Email',
