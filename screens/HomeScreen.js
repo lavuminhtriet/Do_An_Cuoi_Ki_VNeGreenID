@@ -8,15 +8,15 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
-  ScrollView // Cho phép cuộn
+  ScrollView 
 } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
-import { COLORS } from '../constants/colors'; // Import bảng màu
+import { COLORS } from '../constants/colors'; 
 import * as Location from 'expo-location';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; // Import icon
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 // **** THAY THẾ BẰNG TOKEN CỦA BẠN ****
-const AQI_API_TOKEN = 'e048cbb0906d0aad51dc34b65bfbadeb4d7197a9'; // <--- !!! Dán token của bạn vào đây
+const AQI_API_TOKEN = 'e048cbb0906d0aad51dc34b65bfbadeb4d7197a9'; 
 
 export default function HomeScreen() {
   const { authState, logout } = useAuth();
@@ -25,18 +25,18 @@ export default function HomeScreen() {
   const [error, setError] = useState(null);
   const [searchCity, setSearchCity] = useState('');
 
-  // Hàm này chạy 1 lần khi màn hình được mở
+  
   useEffect(() => {
     loadAqiByLocation();
   }, []);
 
-  // Lấy AQI theo vị trí GPS (FR-2.1)
+  
   const loadAqiByLocation = async () => {
     setLoading(true);
     setError(null);
-    setAqiData(null); // Xóa dữ liệu cũ
+    setAqiData(null); 
 
-    // 1. Xin quyền truy cập vị trí
+    
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
       setError('Bạn cần cấp quyền vị trí để xem AQI tại đây.');
@@ -44,12 +44,12 @@ export default function HomeScreen() {
       return;
     }
 
-    // 2. Lấy tọa độ
+    
     try {
       let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
       const { latitude, longitude } = location.coords;
       
-      // 3. Gọi API bằng tọa độ
+      
       fetchAqiData(`geo:${latitude};${longitude}`);
     } catch (e) {
       setError('Không thể lấy vị trí hiện tại.');
@@ -57,7 +57,7 @@ export default function HomeScreen() {
     }
   };
 
-  // Lấy AQI theo tên thành phố (FR-2.2)
+  
   const loadAqiByCity = () => {
     if (searchCity.trim() === '') {
       Alert.alert('Lỗi', 'Vui lòng nhập tên thành phố.');
@@ -65,7 +65,7 @@ export default function HomeScreen() {
     }
     setLoading(true);
     setError(null);
-    setAqiData(null); // Xóa dữ liệu cũ
+    setAqiData(null); 
     fetchAqiData(searchCity);
   };
 
