@@ -2,14 +2,14 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthProvider, useAuth } from './contexts/AuthContext'; // Import AuthProvider
+import { AuthProvider, useAuth } from './contexts/AuthContext'; 
 
 
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
 import HomeScreen from './screens/HomeScreen';
-import LoadingScreen from './screens/LoadingScreen'; // Màn hình chờ
+import LoadingScreen from './screens/LoadingScreen'; 
 
 const Stack = createStackNavigator();
 
@@ -38,7 +38,6 @@ const AppNavigator = () => {
   const { authState } = useAuth();
   
   
-  // Hiển thị màn hình chính nếu đã đăng nhập HOẶC là khách (FR-1.1.2)
   if (authState.isLoggedIn || authState.isGuest) {
     return <MainStack />;
   }
@@ -47,7 +46,6 @@ const AppNavigator = () => {
   return <AuthStack />;
 };
 
-// Component App gốc
 export default function App() {
   return (
     <AuthProvider>
