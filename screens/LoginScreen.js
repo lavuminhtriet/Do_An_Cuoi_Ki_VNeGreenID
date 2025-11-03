@@ -11,12 +11,9 @@ import {
 } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
 import { COLORS } from '../constants/colors';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; // Sử dụng icon MaterialCommunityIcons
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-// Đường dẫn tạm thời cho hình nền lá cây
-// Bạn có thể tự thêm một ảnh lá cây vào thư mục assets/ và đổi tên file
-// Ví dụ: require('../assets/leaf_background.png')
-const leafBackground = require('../assets/background/leaf_background.jpg'); // Thay bằng ảnh của bạn
+const leafBackground = require('../assets/background/leaf_background.jpg'); 
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -24,7 +21,6 @@ export default function LoginScreen({ navigation }) {
   const { login, loginAsGuest } = useAuth();
 
   const handleLogin = () => {
-    // **GIẢ LẬP API:**
     console.log('Đăng nhập với:', email, password);
     if (email === 'test@gmail.com' && password === '123456') {
       const userData = { id: 1, name: 'Người dùng Test', email: email };
@@ -48,13 +44,13 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <ImageBackground source={leafBackground} style={styles.background}>
-      <View style={styles.overlay} /> {/* Lớp phủ mờ để chữ dễ đọc hơn */}
+      <View style={styles.overlay} /> 
       <View style={styles.container}>
-        {/* Logo/Tên ứng dụng */}
+        
         <MaterialCommunityIcons name="leaf" size={60} color={COLORS.primaryLight} style={styles.logoIcon} />
         <Text style={styles.appName}>VNeGreenID</Text>
 
-        {/* Form đăng nhập */}
+        
         <View style={styles.formContainer}>
           <View style={styles.inputGroup}>
             <MaterialCommunityIcons name="email" size={20} color={COLORS.primary} style={styles.inputIcon} />
@@ -84,7 +80,7 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.loginButtonText}>Đăng nhập</Text>
           </TouchableOpacity>
 
-          {/* Các tùy chọn khác */}
+          
           <TouchableOpacity 
             style={styles.forgotPasswordButton} 
             onPress={() => navigation.navigate('ForgotPassword')}
@@ -120,12 +116,12 @@ export default function LoginScreen({ navigation }) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    resizeMode: 'cover', // Đảm bảo ảnh nền được phủ đầy
+    resizeMode: 'cover', 
     justifyContent: 'center',
   },
-  overlay: { // Lớp phủ mờ
+  overlay: { 
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(255,255,255,0.7)', // Màu trắng hơi mờ
+    backgroundColor: 'rgba(255,255,255,0.7)', 
   },
   container: {
     flex: 1,
@@ -139,9 +135,9 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 38,
     fontWeight: 'bold',
-    color: COLORS.primary, // Màu xanh lá đậm
+    color: COLORS.primary, 
     marginBottom: 40,
-    textShadowColor: 'rgba(0,0,0,0.1)', // Đổ bóng nhẹ
+    textShadowColor: 'rgba(0,0,0,0.1)', 
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
@@ -177,7 +173,7 @@ const styles = StyleSheet.create({
     color: COLORS.black,
   },
   loginButton: {
-    backgroundColor: COLORS.primary, // Nút Đăng nhập màu xanh lá
+    backgroundColor: COLORS.primary, 
     paddingVertical: 14,
     borderRadius: 8,
     alignItems: 'center',
@@ -194,7 +190,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   forgotPasswordText: {
-    color: COLORS.secondary, // Màu xanh dương cho link
+    color: COLORS.secondary, 
     fontSize: 14,
   },
   orText: {
@@ -225,7 +221,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 12,
     borderRadius: 8,
-    backgroundColor: COLORS.primaryLight, // Màu xanh lá nhạt
+    backgroundColor: COLORS.primaryLight, 
     marginBottom: 15,
   },
   guestButtonText: {
