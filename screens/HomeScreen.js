@@ -15,7 +15,6 @@ import { COLORS } from '../constants/colors';
 import * as Location from 'expo-location';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-// **** THAY THẾ BẰNG TOKEN CỦA BẠN ****
 const AQI_API_TOKEN = 'e048cbb0906d0aad51dc34b65bfbadeb4d7197a9'; 
 
 export default function HomeScreen() {
@@ -69,7 +68,7 @@ export default function HomeScreen() {
     fetchAqiData(searchCity);
   };
 
-  // Hàm gọi API chung
+  
   const fetchAqiData = async (query) => {
     try {
       const response = await fetch(
@@ -89,7 +88,6 @@ export default function HomeScreen() {
     setLoading(false);
   };
 
-  // Hàm trả về màu sắc và khuyến nghị (FR-2.4)
   const getAqiInfo = (aqi) => {
     if (aqi <= 50) return { 
       color: COLORS.good, 
@@ -129,7 +127,6 @@ export default function HomeScreen() {
     };
   };
 
-  // Hàm hiển thị nội dung chính
   const renderContent = () => {
     if (loading) {
       return <ActivityIndicator size="large" color={COLORS.primary} style={{ marginTop: 50 }} />;
@@ -171,12 +168,12 @@ export default function HomeScreen() {
         </View>
       );
     }
-    return null; // Trường hợp không có gì
+    return null; 
   };
 
   return (
     <ScrollView style={styles.container}>
-      {/* Thanh chào mừng và Đăng xuất */}
+      
       <View style={styles.header}>
         <Text style={styles.welcomeText}>
           {authState.isGuest ? 'Chào Khách!' : `Chào, ${authState.user?.name}!`}
@@ -189,7 +186,7 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Thanh tìm kiếm (FR-2.2) */}
+      
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
@@ -203,36 +200,36 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Nút Lấy vị trí hiện tại */}
+      
       <TouchableOpacity style={styles.locationButton} onPress={loadAqiByLocation}>
         <MaterialCommunityIcons name="crosshairs-gps" size={20} color={COLORS.primary} />
         <Text style={styles.locationButtonText}>Dùng vị trí hiện tại của tôi (FR-2.1)</Text>
       </TouchableOpacity>
 
-      {/* Hiển thị kết quả AQI */}
+      
       {renderContent()}
     </ScrollView>
   );
 }
 
-// --- STYLESHEET (Giao diện) ---
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightGray, // Nền màu xám nhạt
+    backgroundColor: COLORS.lightGray, 
     paddingHorizontal: 15,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 50, // Đẩy xuống dưới thanh status bar
+    marginTop: 50, // Đẩy xuống dưới thanh bar
     marginBottom: 15,
   },
   welcomeText: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: COLORS.primary, // Màu xanh chủ đạo
+    color: COLORS.primary, 
   },
   logoutButton: {
     flexDirection: 'row',
@@ -273,7 +270,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
     borderRadius: 8,
-    backgroundColor: COLORS.primaryLight, // Màu xanh lá nhạt
+    backgroundColor: COLORS.primaryLight, 
     alignSelf: 'flex-start',
     marginBottom: 20,
   },
@@ -326,7 +323,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   recommendationBox: {
-    backgroundColor: '#E3F2FD', // Nền xanh dương rất nhạt
+    backgroundColor: '#E3F2FD', 
     borderRadius: 8,
     padding: 15,
     flexDirection: 'row',
