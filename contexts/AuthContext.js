@@ -4,7 +4,7 @@ import React, { createContext, useState, useContext } from 'react';
 // Tạo Context
 const AuthContext = createContext();
 
-// Tạo Provider (component bao bọc ứng dụng)
+
 export const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState({
     isLoggedIn: false,
@@ -12,21 +12,21 @@ export const AuthProvider = ({ children }) => {
     user: null,
   });
 
-  // Hàm xử lý đăng nhập thành công
+  
   const login = (userData) => {
     setAuthState({
       isLoggedIn: true,
       isGuest: false,
       user: userData,
     });
-    // Ở đây bạn có thể lưu token vào AsyncStorage
+    
   };
 
   // Hàm xử lý đăng nhập với tư cách Khách (FR-1.1.2)
   const loginAsGuest = () => {
     setAuthState({
-      isLoggedIn: false, // Vẫn là false
-      isGuest: true,    // Nhưng isGuest là true
+      isLoggedIn: false, 
+      isGuest: true,    
       user: null,
     });
   };
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
       isGuest: false,
       user: null,
     });
-    // Ở đây bạn có thể xóa token khỏi AsyncStorage
+    
   };
 
   return (
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Tạo một custom hook để dễ dàng sử dụng context
+
 export const useAuth = () => {
   return useContext(AuthContext);
 };
