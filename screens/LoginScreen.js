@@ -16,7 +16,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 
-// Đảm bảo bạn có file ảnh này trong assets/
+
 const leafBackground = require('../assets/leaf_background.jpg');
 
 WebBrowser.maybeCompleteAuthSession();
@@ -26,8 +26,7 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const { login, loginAsGuest } = useAuth();
 
-  // --- CẤU HÌNH GOOGLE ---
-  // !! BẠN PHẢI THAY THẾ CÁC ID NÀY BẰNG ID CỦA BẠN !!
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: 'YOUR_WEB_CLIENT_ID_HERE.apps.googleusercontent.com', 
     iosClientId: 'YOUR_IOS_CLIENT_ID_HERE.apps.googleusercontent.com',
@@ -44,7 +43,7 @@ export default function LoginScreen({ navigation }) {
     }
   }, [response]);
 
-  // Dùng access token để lấy thông tin người dùng
+
   async function fetchGoogleUserInfo(token) {
     try {
       const response = await fetch('https.www.googleapis.com/userinfo/v2/me', {
@@ -66,7 +65,7 @@ export default function LoginScreen({ navigation }) {
   }
 
   const handleLogin = () => {
-    // **GIẢ LẬP API:**
+
     console.log('Đăng nhập với:', email, password);
     if (email === 'test@gmail.com' && password === '123456') {
       const userData = { id: 1, name: 'Người dùng Test', email: email };
