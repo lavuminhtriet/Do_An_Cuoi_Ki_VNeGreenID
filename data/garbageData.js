@@ -39,7 +39,7 @@ export const GARBAGE_CATEGORIES = [
   {
     id: 'kim-loai',
     name: 'Rác Tái chế (Kim loại)',
-    icon: 'corkscrew',
+    icon: 'cog',
     color: '#9E9E9E', 
     description: 'Các vật dụng bằng kim loại.',
     examples: ['Lon bia', 'Lon nước ngọt', 'Hộp sữa đặc', 'Vật dụng sắt/nhôm hỏng'],

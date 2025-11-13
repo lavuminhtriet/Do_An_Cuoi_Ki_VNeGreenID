@@ -48,7 +48,12 @@ export default function HomeScreen() {
 
     
     try {
-      let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
+
+      let location = await Location.getCurrentPositionAsync({ 
+        accuracy: Location.Accuracy.High 
+      });
+
+      
       const { latitude, longitude } = location.coords;
       
       
@@ -145,13 +150,13 @@ export default function HomeScreen() {
 
       return (
         <View style={styles.aqiCard}>
-          {/* Tên thành phố */}
+
           <Text style={styles.cityText}>{city}</Text>
           <Text style={styles.updateText}>
             Cập nhật lúc: {new Date(aqiData.time.iso).toLocaleTimeString('vi-VN')}
           </Text>
 
-          {/* Icon và Chỉ số AQI */}
+
           <View style={styles.aqiDisplay}>
             <MaterialCommunityIcons name={aqiInfo.icon} size={60} color={aqiInfo.color} />
             <Text style={[styles.aqiValue, { color: aqiInfo.color }]}>
@@ -162,7 +167,7 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          {/* Khuyến nghị sức khỏe */}
+
           <View style={styles.recommendationBox}>
             <MaterialCommunityIcons name="information-outline" size={24} color={COLORS.secondary} />
             <Text style={styles.recommendationText}>
@@ -177,6 +182,7 @@ export default function HomeScreen() {
 
   return (
     <ScrollView style={styles.container}>
+
       <View style={styles.header}>
         
         <TouchableOpacity 
@@ -200,6 +206,7 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
+
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
@@ -213,10 +220,12 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
+
       <TouchableOpacity style={styles.locationButton} onPress={loadAqiByLocation}>
         <MaterialCommunityIcons name="crosshairs-gps" size={20} color={COLORS.primary} />
-        <Text style={styles.locationButtonText}>Dùng vị trí hiện tại của tôi (FR-2.1)</Text>
+        <Text style={styles.locationButtonText}>Dùng vị trí hiện tại của tôi</Text>
       </TouchableOpacity>
+
 
       {renderContent()}
     </ScrollView>

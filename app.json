@@ -2,11 +2,11 @@
   "expo": {
     "name": "VNeGreenID",
     "slug": "VNeGreenID",
+    "scheme": "vnegreenid",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -26,7 +26,14 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-web-browser"
-    ]
+      "expo-web-browser",
+      "expo-video"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6a24b8cf-f9be-4da8-a294-9a43443f3b16"
+      }
+    },
+    "owner": "latriet"
   }
 }
