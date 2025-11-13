@@ -210,10 +210,10 @@ export default function ProfileScreen() {
   };
 
 
-  // --- GIAO DIỆN ---
+  
   return (
     <ScrollView style={styles.container}>
-      {/* (Phần Hồ sơ) */}
+      
       <View style={styles.header}>
         <TouchableOpacity style={styles.avatarContainer} onPress={pickImage}>
           <Image
@@ -228,7 +228,7 @@ export default function ProfileScreen() {
         <Text style={styles.emailText}>{email}</Text>
       </View>
 
-      {/* (Phần Cảnh báo) */}
+      
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Cài đặt Cảnh báo</Text>
         <View style={styles.settingRow}>
@@ -255,7 +255,7 @@ export default function ProfileScreen() {
         )}
       </View>
 
-      {/* (Phần Thông tin) */}
+      
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Thông tin liên hệ</Text>
         <View style={styles.inputGroup}>
@@ -275,10 +275,10 @@ export default function ProfileScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* (Phần Lịch sử Báo cáo) */}
+      
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Lịch sử báo cáo</Text>
-        {/* NÚT MỚI ĐỂ SỬA LỖI */}
+        
         <TouchableOpacity style={styles.clearButton} onPress={clearHistory}>
           <MaterialCommunityIcons name="delete-sweep" size={20} color={COLORS.unhealthy} />
           <Text style={styles.clearButtonText}>Dọn dẹp Lịch sử (Sửa lỗi)</Text>
@@ -286,7 +286,7 @@ export default function ProfileScreen() {
         {renderReportHistory()}
       </View>
 
-      {/* (Phần Lịch sử Chatbot) */}
+      
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Lịch sử Chatbot</Text>
         {chatbotHistory.map(chat => {
@@ -303,7 +303,7 @@ export default function ProfileScreen() {
   );
 }
 
-// --- STYLESHEET (ĐÃ THÊM NÚT "CLEAR") ---
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.lightGray },
   header: { backgroundColor: COLORS.white, padding: 20, alignItems: 'center', borderBottomLeftRadius: 20, borderBottomRightRadius: 20, marginBottom: 10 },
@@ -328,21 +328,21 @@ const styles = StyleSheet.create({
   historyStatus: { fontSize: 14, fontWeight: '600', marginLeft: 10, },
   emptyText: { textAlign: 'center', color: COLORS.gray, fontStyle: 'italic', },
   
-  // NÚT MỚI
+  
   clearButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
-    backgroundColor: '#FFF0F0', // Nền đỏ nhạt
-    borderColor: COLORS.unhealthy, // Viền đỏ
+    backgroundColor: '#FFF0F0', 
+    borderColor: COLORS.unhealthy, 
     borderWidth: 1,
     borderRadius: 8,
 
     marginBottom: 15,
   },
   clearButtonText: {
-    color: COLORS.unhealthy, // Chữ đỏ
+    color: COLORS.unhealthy, 
     marginLeft: 10,
     fontWeight: '600',
   }
