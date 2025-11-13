@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     user: null,
   });
 
-  // Hàm xử lý đăng nhập thành công
+
   const login = (userData) => {
     setAuthState({
       isLoggedIn: true,
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
     
   };
 
-  // Hàm xử lý đăng nhập với tư cách Khách 
+
   const loginAsGuest = () => {
     setAuthState({
       isLoggedIn: false, 
@@ -28,8 +28,7 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  // Hàm xử lý đăng xuất
-  const logout = () => {
+  // Hàm xử lý đăng xuất  const logout = () => {
     setAuthState({
       isLoggedIn: false,
       isGuest: false,
