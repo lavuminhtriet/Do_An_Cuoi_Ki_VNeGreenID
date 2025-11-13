@@ -28,8 +28,7 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  // Hàm xử lý đăng xuất
-  const logout = () => {
+  // Hàm xử lý đăng xuất  const logout = () => {
     setAuthState({
       isLoggedIn: false,
       isGuest: false,
