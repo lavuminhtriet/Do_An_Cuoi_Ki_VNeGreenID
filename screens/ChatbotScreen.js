@@ -12,7 +12,7 @@ const GEMINI_API_KEY = 'AIzaSyD-4-98mFCtDPi8U5eRclB-UK4EwKf4FcU';
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-// Thông tin của Chatbot (bên trái)
+
 const chatbotUser = {
   _id: 2,
   name: 'VNeGreen Bot',

@@ -11,9 +11,9 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
-import { API_URL } from '../constants/apiConfig'; // Đảm bảo bạn đã tạo file này
+import { API_URL } from '../constants/apiConfig'; 
 
-// Cấu hình thông báo (giữ nguyên)
+// Cấu hình thông báo
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true, shouldPlaySound: false, shouldSetBadge: false,
@@ -29,27 +29,27 @@ const DAYS_OF_WEEK = [
 export default function ProfileScreen() {
   const { authState } = useAuth();
   
-  // States (Hồ sơ)
+  
   const [avatarUri, setAvatarUri] = useState(null);
   const [name, setName] = useState(authState.user?.name);
   const [email, setEmail] = useState(authState.user?.email);
   const [phone, setPhone] = useState('0909123456');
   const [defaultLocation, setDefaultLocation] = useState('Hanoi');
   
-  // States (Cảnh báo & Nhắc rác)
-  const [pushToken, setPushToken] = useState(null); // Sẽ được lấy 1 lần
+  
+  const [pushToken, setPushToken] = useState(null); 
   const [allowNotifications, setAllowNotifications] = useState(false);
   const [alertThreshold, setAlertThreshold] = useState('150');
   const [recycleReminderEnabled, setRecycleReminderEnabled] = useState(false);
   const [selectedDay, setSelectedDay] = useState(null);
   
-  // States (Lịch sử)
+  
   const [reportHistory, setReportHistory] = useState([]);
   const [loadingReports, setLoadingReports] = useState(true);
 
   const chatbotHistory = [{ id: 1, question: 'Cách phân loại pin?' }];
 
-  // --- 1. LOAD DỮ LIỆU TỪ BỘ NHỚ KHI VÀO MÀN HÌNH ---
+  
   useFocusEffect(
     React.useCallback(() => {
       loadSettingsFromStorage();
@@ -57,7 +57,7 @@ export default function ProfileScreen() {
     }, [])
   );
 
-  // Tải Lịch sử Báo cáo (FR-4.2)
+  
   const loadReportsFromStorage = async () => {
     setLoadingReports(true);
     try {
@@ -67,7 +67,7 @@ export default function ProfileScreen() {
     setLoadingReports(false);
   };
 
-  // Tải Cài đặt Nhắc rác (FR-6.2)
+  
   const loadRecycleSettings = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@recycle_settings');
@@ -79,7 +79,7 @@ export default function ProfileScreen() {
     } catch (e) { console.error("Lỗi đọc cài đặt nhắc rác:", e); }
   };
   
-  // --- 2. HÀM LẤY PUSH TOKEN (CHỈ CHẠY 1 LẦN KHI BẬT) ---
+  
   const registerForPushNotifications = async () => {
     try { 
       let token;
@@ -95,36 +95,32 @@ export default function ProfileScreen() {
       }
       if (finalStatus !== 'granted') {
         Alert.alert('Lỗi', 'Bạn chưa cấp quyền thông báo!');
-        return false; // Báo thất bại
+        return false; 
       }
       token = (await Notifications.getExpoPushTokenAsync({
-        projectId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" // THAY BẰNG PROJECT ID CỦA BẠN TRONG app.json
+        projectId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" 
       })).data;
       console.log("Expo Push Token:", token); 
-      setPushToken(token); // Quan trọng: Set token vào state
-      return true; // Báo thành công
+      setPushToken(token); 
+      return true; 
     } catch (e) {
       console.error("Lỗi khi lấy Push Token:", e);
       Alert.alert( 'Lỗi Lấy Token', 'Không thể lấy push token. Hãy chắc chắn file app.json đã có "projectId" hợp lệ. Lỗi: ' + e.message );
-      return false; // Báo thất bại
+      return false; 
     }
   };
 
-  // --- 3. HÀM ĐỒNG BỘ "THÔNG MINH" (MASTER SYNC) ---
-  // useEffect này sẽ "quan sát" các cài đặt.
-  // Nó chỉ chạy khi một cài đặt thay đổi VÀ đã có pushToken.
+  
   useEffect(() => {
-    // Hàm đồng bộ lên server
+    
     const syncSettingsWithServer = async () => {
-      // ĐIỀU KIỆN AN TOÀN:
-      // 1. Nếu người dùng tắt thông báo -> KHÔNG GỬI
-      // 2. Nếu chưa có pushToken -> KHÔNG GỬI
+      
       if (!allowNotifications || !pushToken) {
         console.log("SYNC BỎ QUA: Người dùng tắt thông báo hoặc chưa có token.");
         return;
       }
 
-      // Tập hợp tất cả cài đặt
+     
       const settings = {
         pushToken: pushToken,
         alertThreshold: parseInt(alertThreshold) || 150,
@@ -157,31 +153,30 @@ export default function ProfileScreen() {
       }
     };
     
-    // Gọi hàm sync
+    
     syncSettingsWithServer();
 
   }, [pushToken, alertThreshold, defaultLocation, recycleReminderEnabled, selectedDay, allowNotifications]); // <-- "Quan sát" 6 state này
 
-  // --- 4. CÁC HÀM HANDLER (ĐÃ ĐƠN GIẢN HÓA) ---
-  // Các hàm này chỉ cần setState. useEffect ở trên sẽ lo việc đồng bộ.
+  
   
   const toggleNotifications = async (value) => {
     setAllowNotifications(value);
     if (value === true) {
-      // Nếu bật, cố gắng lấy token
+      
       const success = await registerForPushNotifications();
       if (!success) {
-        setAllowNotifications(false); // Trả lại Switch nếu lấy token thất bại
+        setAllowNotifications(false); 
       }
     } else {
-      // Nếu tắt, ta không cần làm gì (useEffect sẽ tự thấy `allowNotifications` là false)
+      
       console.log("Đã tắt thông báo.");
     }
   };
   
   const handleSaveThreshold = () => {
-    // Chỉ cần setState. useEffect sẽ tự động sync.
-    setAlertThreshold(alertThreshold); // (Thực ra dòng này hơi thừa, nhưng để cho rõ)
+    
+    setAlertThreshold(alertThreshold); 
     Alert.alert('Đã lưu', `Ngưỡng cảnh báo mới là ${alertThreshold}.`); 
   };
   
@@ -190,17 +185,17 @@ export default function ProfileScreen() {
     const newDay = value ? selectedDay : null;
     if (!value) setSelectedDay(null);
     AsyncStorage.setItem('@recycle_settings', JSON.stringify({ enabled: value, day: newDay }));
-    // useEffect sẽ tự động sync
+    
   };
 
   const handleSelectDay = (dayId) => {
     const newDay = dayId === selectedDay ? null : dayId;
     setSelectedDay(newDay);
     AsyncStorage.setItem('@recycle_settings', JSON.stringify({ enabled: recycleReminderEnabled, day: newDay }));
-    // useEffect sẽ tự động sync
+    
   };
   
-  // (Các hàm Hồ sơ và Lịch sử không thay đổi)
+  
   const pickImage = async () => {
 
     try {
@@ -212,7 +207,7 @@ export default function ProfileScreen() {
   };
   
   const handleSaveChanges = () => { 
-    // Khi đổi Vị trí mặc định, useEffect cũng sẽ tự động sync
+    
     Alert.alert('Thông báo', 'Đã cập nhật thông tin.'); 
   };
 
@@ -256,10 +251,10 @@ export default function ProfileScreen() {
   };
 
 
-  // --- GIAO DIỆN (Không thay đổi) ---
+  
   return (
     <ScrollView style={styles.container}>
-      {/* (Phần Hồ sơ) */}
+      
       <View style={styles.header}>
         <TouchableOpacity style={styles.avatarContainer} onPress={pickImage}>
           <Image style={styles.avatar} source={avatarUri ? { uri: avatarUri } : require('../assets/icon.png')} />
@@ -269,7 +264,7 @@ export default function ProfileScreen() {
         <Text style={styles.emailText}>{email}</Text>
       </View>
 
-      {/* (Phần Nhắc rác FR-6.2) */}
+      
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Cài đặt Nhắc nhở (FR-6.2)</Text>
         <View style={styles.settingRow}>
@@ -301,7 +296,7 @@ export default function ProfileScreen() {
         )}
       </View>
       
-      {/* (Phần Cảnh báo AQI FR-2.2) */}
+      
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Cài đặt Cảnh báo AQI (FR-2.2)</Text>
         <View style={styles.settingRow}>
@@ -313,7 +308,7 @@ export default function ProfileScreen() {
             value={allowNotifications}
           />
         </View>
-
+        
         {allowNotifications && (
           <>
             <Text style={styles.label}>Cảnh báo khi AQI vượt ngưỡng:</Text>
@@ -328,7 +323,7 @@ export default function ProfileScreen() {
         )}
       </View>
 
-      {/* (Phần Thông tin) */}
+      
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Thông tin liên hệ</Text>
         <View style={styles.inputGroup}>
@@ -348,10 +343,10 @@ export default function ProfileScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* (Phần Lịch sử Báo cáo) */}
+      
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Lịch sử báo cáo</Text>
-        
+
         <TouchableOpacity style={styles.clearButton} onPress={clearHistory}>
           <MaterialCommunityIcons name="delete-sweep" size={20} color={COLORS.unhealthy} />
           <Text style={styles.clearButtonText}>Dọn dẹp Lịch sử (Sửa lỗi)</Text>
@@ -359,7 +354,7 @@ export default function ProfileScreen() {
         {renderReportHistory()}
       </View>
 
-      {/* (Phần Lịch sử Chatbot) */}
+      
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Lịch sử Chatbot</Text>
         {chatbotHistory.map(chat => {
@@ -376,7 +371,7 @@ export default function ProfileScreen() {
   );
 }
 
-// --- STYLESHEET (ĐẦY ĐỦ VÀ CHÍNH XÁC) ---
+
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.lightGray },
   header: { backgroundColor: COLORS.white, padding: 20, alignItems: 'center', borderBottomLeftRadius: 20, borderBottomRightRadius: 20, marginBottom: 10 },
